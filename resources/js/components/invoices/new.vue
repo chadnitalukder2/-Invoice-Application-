@@ -48,7 +48,7 @@
                 </div>
     
                 <!-- item 1 -->
-                <div class="table--items2" v-for="(itemcart, i) in listCart" :key="itemcart.id">
+                <div class="table--items2" v-for="(itemcart, i ) in listCart" :key="itemcart.id">
                     <p>#{{ itemcart.item_code }} {{ itemcart.description }}</p>
                     <p>
                         <input type="text" class="input" v-model="itemcart.unit_price">
@@ -57,10 +57,10 @@
                         <input type="text" class="input" v-model="itemcart.quantity" >
                     </p>
                     <p v-if="itemcart.quantity">
-                        $ {{ itemcart.quantity }} * {{ itemcart.unit_price }}
+                        $ {{ (itemcart.quantity) *  (itemcart.unit_price) }}
                     </p>
                     <p v-else></p>
-                    <p style="color: red; font-size: 24px;cursor: pointer;">
+                    <p style="color: red; font-size: 24px;cursor: pointer;" @click="removeItem(i)">
                         &times;
                     </p>
                 </div>
@@ -74,12 +74,12 @@
             <div class="table__footer">
                 <div class="document-footer" >
                     <p>Terms and Conditions</p>
-                    <textarea cols="50" rows="7" class="textarea" ></textarea>
+                    <textarea cols="50" rows="7" class="textarea" v-model="form.terms_and_conditions"></textarea>
                 </div>
                 <div>
                     <div class="table__footer--subtotal">
                         <p>Sub Total</p>
-                        <span>$ 1000</span>
+                        <span>$ {{ SubTotal() }}</span>
                     </div>
                     <div class="table__footer--discount">
                         <p>Discount</p>
@@ -113,10 +113,16 @@
             <h3 class="modal__title">Add Item</h3>
             <hr><br>
             <div class="modal__items">
-                <select class="input my-1">
-                    <option value="None">None</option>
-                    <option value="None">LBC Padala</option>
-                </select>
+                <ul style="list-style: none;">
+                    <li v-for="(item, i) in listproducts" :key="item.id" style="display: grid;grid-template-columns:30px 350px 15px ;align-items: center;padding-bottom:5px ;">
+                        <p>{{ i+1 }}</p>
+                        <a href="#"> {{ item.item_code }} {{ item.description }}</a>
+                        <button @click="addCart(item)" style="border: 1px solid #e0e0e0;width: 35px;height: 35px;cursor: pointer; ">
+                            +
+                        </button>
+                    </li>
+                </ul>
+             
             </div>
             <br><hr>
             <div class="model__footer">
@@ -128,7 +134,7 @@
         </div>
     </div>
 
-
+<br><br><br>
     </div>
 </template>
 
@@ -143,10 +149,12 @@
     let listCart = ref([])
     const showModel = ref(false)
     const hideModel = ref(true)
+    let listproducts = ref([])
 
     onMounted(async () => {
         indexForm()
         getAllCustomers()
+        getProducts()
     })
 
     const indexForm = async () => {
@@ -170,12 +178,32 @@
             quantity : item.quantity,
         }
         listCart.value.push(itemcart)
+        closeModel()
     }
+
+    const removeItem = (i) =>{
+        listCart.value.splice(i,1)
+    }
+
     const openModel = () => {
         showModel.value = !showModel.value
     }
     const closeModel = () => {
         showModel.value = !hideModel.value
+    }
+
+    const getProducts = async () => {
+        let response = await axios.get('/api/products')
+        //console.log('products', response);
+        listproducts.value = response.data.products
+    }
+
+    const SubTotal = () =>{
+        let total = 0
+        listCart.value.map((data) => {
+            total = total + (data.quantity*data.unit_price)
+        })
+        return total
     }
 
 </script>

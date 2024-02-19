@@ -16,21 +16,24 @@
             <div class="card__content--header">
                 <div>
                     <p class="my-1">Customer</p>
-                    <select name="" id="" class="input">
-                        <option value="">cust 1</option>
+                    <select name="" id="" class="input" v-model="customer_id">
+                        <option disabled>Select customer</option>
+                        <option :value="customer.id" v-for="customer in allcustomers" :key="customer.id">
+                            {{ customer.firstname }}
+                        </option>
                     </select>
                 </div>
                 <div>
                     <p class="my-1">Date</p> 
-                    <input id="date" placeholder="dd-mm-yyyy" type="date" class="input"> <!---->
+                    <input v-model="form.date" id="date" placeholder="dd-mm-yyyy" type="date" class="input"> <!---->
                     <p class="my-1">Due Date</p> 
-                    <input id="due_date" type="date" class="input">
+                    <input v-model="form.due_date" id="due_date" type="date" class="input">
                 </div>
                 <div>
-                    <p class="my-1">Numero</p> 
-                    <input type="text" class="input"> 
+                    <p class="my-1">Number</p> 
+                    <input type="text" class="input" v-model="form.number"> 
                     <p class="my-1">Reference(Optional)</p> 
-                    <input type="text" class="input">
+                    <input type="text" class="input" v-model="form.reference">
                 </div>
             </div>
             <br><br>
@@ -45,23 +48,26 @@
                 </div>
     
                 <!-- item 1 -->
-                <div class="table--items2">
-                    <p>#093654 vjxhchkvhxc vkxckvjkxc jkvjxckvjkx </p>
+                <div class="table--items2" v-for="(itemcart, i) in listCart" :key="itemcart.id">
+                    <p>#{{ itemcart.item_code }} {{ itemcart.description }}</p>
                     <p>
-                        <input type="text" class="input" >
+                        <input type="text" class="input" v-model="itemcart.unit_price">
                     </p>
                     <p>
-                        <input type="text" class="input" >
+                        <input type="text" class="input" v-model="itemcart.quantity" >
                     </p>
-                    <p>
-                        $ 10000
+                    <p v-if="itemcart.quantity">
+                        $ {{ itemcart.quantity }} * {{ itemcart.unit_price }}
                     </p>
+                    <p v-else></p>
                     <p style="color: red; font-size: 24px;cursor: pointer;">
                         &times;
                     </p>
                 </div>
                 <div style="padding: 10px 30px !important;">
-                    <button class="btn btn-sm btn__open--modal">Add New Line</button>
+                    <button class="btn btn-sm btn__open--modal" @click="openModel()">
+                        Add New Line
+                    </button>
                 </div>
             </div>
 
@@ -101,9 +107,9 @@
     </div>
 
             <!--==================== add modal items ====================-->
-    <div class="modal main__modal ">
+    <div class="modal main__modal " :class="{show: showModel }">
         <div class="modal__content">
-            <span class="modal__close btn__close--modal">×</span>
+            <span class="modal__close btn__close--modal" @click="closeModel()" >×</span>
             <h3 class="modal__title">Add Item</h3>
             <hr><br>
             <div class="modal__items">
@@ -114,7 +120,7 @@
             </div>
             <br><hr>
             <div class="model__footer">
-                <button class="btn btn-light mr-2 btn__close--modal">
+                <button class="btn btn-light mr-2 btn__close--modal" @click="closeModel()">
                     Cancel
                 </button>
                 <button class="btn btn-light btn__close--modal ">Save</button>
@@ -126,6 +132,50 @@
     </div>
 </template>
 
-<script>
+<script setup>
+    import axios from "axios"
+    import {onMounted, ref} from "vue"
+
+    let form = ref([])
+    let allcustomers = ref([])
+    let customer_id = ref([])
+    let item = ref([])
+    let listCart = ref([])
+    const showModel = ref(false)
+    const hideModel = ref(true)
+
+    onMounted(async () => {
+        indexForm()
+        getAllCustomers()
+    })
+
+    const indexForm = async () => {
+        let response = await axios.get('/api/create_invoice')
+        //console.log('form', response.data)
+        form.value = response.data
+    }
+
+    const getAllCustomers = async () => {
+        let response = await axios.get('/api/customers')
+        //console.log('response', response)
+        allcustomers.value = response.data.customers
+    }
+
+    const addCart = (item) =>{
+        const itemcart = {
+            id : item.id,
+            item_code : item.item_code,
+            description : item.description,
+            unit_price : item.unit_price,
+            quantity : item.quantity,
+        }
+        listCart.value.push(itemcart)
+    }
+    const openModel = () => {
+        showModel.value = !showModel.value
+    }
+    const closeModel = () => {
+        showModel.value = !hideModel.value
+    }
 
 </script>

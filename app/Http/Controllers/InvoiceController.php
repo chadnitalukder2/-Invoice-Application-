@@ -76,16 +76,21 @@ class InvoiceController extends Controller
         $invoicedata['discount'] = $request->input("discount");
         $invoicedata['reference'] = $request->input("reference");
         $invoicedata['terms_and_conditions'] = $request->input("terms_and_conditions");
-   
+        // dd($invoicedata);
         $invoice = Invoice::create($invoicedata);
         
-            foreach (json_decode($invoiceitem) as $item){
-                $itemdata['product_id'] = $item->id;
-                $itemdata['invoice_id'] = $invoice->id;
-                $itemdata['quantity'] = $item->quantity;
-                $itemdata['unit_price'] = $item->unit_price;
+        foreach (json_decode($invoiceitem) as $item){
+            $itemdata['product_id'] = $item->id;
+            $itemdata['invoice_id'] = $invoice->id;
+            $itemdata['quantity'] = $item->quantity;
+            $itemdata['unit_price'] = $item->unit_price;
 
-                InvoiceItem::create($itemdata);
-            }
+            InvoiceItem::create($itemdata);
+        }
+        
+        // return array(
+        //     "status" => 200,
+        //     "msg" => "add successful",
+        // )
     }
 }

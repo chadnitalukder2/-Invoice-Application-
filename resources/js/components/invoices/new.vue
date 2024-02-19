@@ -139,7 +139,7 @@
 </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios"
 import {
     onMounted,

@@ -1,8 +1,9 @@
 <script setup>
-    import { useRouter, useRoute } from 'vue-router';
-    const router = useRouter();
     import axios from "axios"
     import {onMounted, ref} from "vue"
+    import { useRouter, useRoute } from 'vue-router';
+    const router = useRouter();
+   
 
 
     let form = ref({
@@ -91,8 +92,9 @@
 
     const onEdit = (id) => {
         if(form.value.invoice_items.length >= 1){
-            // alert(JSON.stringify(form.value.invoice_items))
-            let subtotal = 0
+            //alert(JSON.stringify(form.value.invoice_items))
+
+           let subtotal = 0
             subtotal = SubTotal()
 
             let total = 0
@@ -113,10 +115,11 @@
             axios.post(`/api/update_invoice/${form.value.id}`, formData)
             form.value.invoice_items = []
             router.push('/')
-    
+            
         }
+      
     }
-
+ 
 </script>
 
 
@@ -225,7 +228,9 @@
             <div class="card__header" style="margin-top: 40px">
                 <div></div>
                 <div>
-                    <a class="btn btn-secondary"> Save </a>
+                    <a class="btn btn-secondary" @click="onEdit(form.id)"> 
+                        Save
+                     </a>
                 </div>
             </div>
         </div>
@@ -253,7 +258,7 @@
                     <button class="btn btn-light mr-2 btn__close--modal" @click="closeModel()">
                         Cancel
                     </button>
-                    <button class="btn btn-light btn__close--modal" @click="onEdit(form.id)">
+                    <button class="btn btn-light btn__close--modal" >
                         Save
                     </button>
                 </div>

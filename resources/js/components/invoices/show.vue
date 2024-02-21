@@ -30,7 +30,7 @@
                         </li>
                         <li>
                             <!-- Select Btn Option -->
-                            <button class="selectBtnFlat">
+                            <button class="selectBtnFlat" @click="onEdit(form.id)">
                                 <i class=" fas fa-reply"></i>
                                 Edit
                             </button>
@@ -148,6 +148,8 @@
 
 
 <script setup>
+    import { useRouter, useRoute } from 'vue-router';
+    const router = useRouter();
     import axios from "axios";
     import {onMounted, ref} from "vue"
 
@@ -174,6 +176,12 @@
         window.print()
         router.push('/').catch(() => {})
     }
+
+    const onEdit = (id) => {
+        router.push('/invoice/edit/'+id)
+        //console.log('hi');
+    }
+
 
 
 </script>

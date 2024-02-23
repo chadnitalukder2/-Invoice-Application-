@@ -1,5 +1,5 @@
 <script setup>
-    import axios from "axios"
+     import axios from "axios"
     import {onMounted, ref} from "vue"
     import { useRouter, useRoute } from 'vue-router';
     const router = useRouter();
@@ -92,7 +92,7 @@
 
     const onEdit = (id) => {
         if(form.value.invoice_items.length >= 1){
-            //alert(JSON.stringify(form.value.invoice_items))
+            alert(JSON.stringify(form.value.invoice_items))
 
            let subtotal = 0
             subtotal = SubTotal()
@@ -101,7 +101,7 @@
             total = Total()
 
             const formData = new FormData()
-            formData.append('invoice_item', JSON.stringify(form.value.invoice_items))
+            formData.append('invoice_items', JSON.stringify(form.value.invoice_items))
             formData.append('customer_id', form.value.customer_id)
             formData.append('date', form.value.date)
             formData.append('due_date', form.value.due_date)

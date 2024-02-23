@@ -115,23 +115,21 @@ class InvoiceController extends Controller
     }
 
     public function update_invoice(Request $request, $id){
-        $invoice = Invoice::where('id', $id)->first();
-       
-        $invoice->sub_total = $request->subtotal;
-        $invoice->total = $request->total;
-        $invoice->customer_id = $request->customer_id;
-        $invoice->number = $request->number;
-        $invoice->date = $request->date;
-        $invoice->due_date = $request->due_date;
-        $invoice->discount = $request->discount;
-        $invoice->reference = $request->reference;
-        $invoice->terms_and_conditions = $request->terms_and_conditions;
     
-        $invoice->update($request->all());
+        $invoice = Invoice::where('id', $id)->first();
 
-        $invoiceitem = $request->input("invoice_item");
-
-        $invoice->invoice_items()->delete();
+        $invoice->update([
+                'sub_total' => $request->subtotal,
+                'total' => $request->total,
+                'customer_id' => $request->customer_id,
+                'number' => $request->number,
+                'date' => $request->date,
+                'due_date' => $request->due_date,
+                'discount' => $request->discount,
+                'reference' => $request->reference,
+                'terms_and_conditions' => $request->terms_and_conditions,
+            ]);
+        $invoiceitem = $request->input("invoice_items");
 
         foreach(json_decode($invoiceitem) as $item){
 
@@ -141,7 +139,7 @@ class InvoiceController extends Controller
             $itemdata['unit_price'] = $item->unit_price;
 
             InvoiceItem::create($itemdata);
-        }
+       }
     }
 
 

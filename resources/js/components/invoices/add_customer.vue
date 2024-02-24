@@ -40,6 +40,7 @@ const router = useRouter();
 const form = ref([]);
 
 const onSave = async () => {
+    
      let data = {
         firstname : form.value.firstname,
         lastname : form.value.lastname,
@@ -48,10 +49,8 @@ const onSave = async () => {
      }
     //  console.log({data});
      let response = await axios.post("/api/add_customer",data );
-     
-     
-    
-    // router.push('/new/customer')
+     form.value=[];
+
 };
 </script>
 

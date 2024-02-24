@@ -8,8 +8,15 @@
                 <h2 class="invoice__title">Invoices</h2>
             </div>
             <div>
-                <a class="btn btn-secondary" @click="newInvoice">
+                <a class="btn btn-secondary" @click="newInvoice()" >
                     New Invoice
+                </a>
+            </div>
+            <div >
+                <a class="btn btn-secondary bt-3">
+                    <router-link to="/new/customer">
+                    Add Customer
+                </router-link>
                 </a>
             </div>
         </div>
@@ -125,6 +132,8 @@
     const onShow = (id) => {
         router.push('/invoice/show/' + id)
     }
+
+    
 
 </script>
 

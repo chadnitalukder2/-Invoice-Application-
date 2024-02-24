@@ -6,6 +6,7 @@ import invoiceIndex from '../components/invoices/index.vue';
 import invoiceNew from '../components/invoices/new.vue';
 import invoiceShow from '../components/invoices/show.vue';
 import invoiceEdit from '../components/invoices/edit.vue';
+import NewCustomer from '../components/invoices/add.vue';
 
 const routes =[
     {
@@ -27,6 +28,11 @@ const routes =[
         path: '/invoice/edit/:id',
         component: invoiceEdit,
         props:true
+    },
+    {
+        path: '/new/customer',
+        name : 'new.customer',
+        component: NewCustomer
     },
     {
         path: '/:pathMatch(.*)',

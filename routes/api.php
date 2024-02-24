@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,8 @@ Route::get('/delete_invoice_item/{id}', [InvoiceController::class, 'delete_invoi
 Route::post('/update_invoice/{id}', [InvoiceController::class, 'update_invoice']);
 
 Route::get('/delete_invoice/{id}', [InvoiceController::class, 'delete_invoice']);
+
+Route::post('/add_customer', [CustomerController::class, 'add_customer']);
 
 
 

@@ -21,8 +21,22 @@
             </div>
             <div >
                 <a class="btn btn-secondary bt-3">
+                    <router-link to="/all/customer">
+                    All Customer
+                </router-link>
+                </a>
+            </div>
+            <div >
+                <a class="btn btn-secondary bt-3">
                     <router-link to="/add/product">
                         Add product
+                    </router-link>
+                </a>
+            </div>
+            <div >
+                <a class="btn btn-secondary bt-3">
+                    <router-link to="/all/product">
+                        All product
                     </router-link>
                 </a>
             </div>

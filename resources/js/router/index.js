@@ -8,6 +8,8 @@ import invoiceShow from '../components/invoices/show.vue';
 import invoiceEdit from '../components/invoices/edit.vue';
 import AddCustomer from '../components/invoices/add_customer.vue';
 import AddProduct from '../components/invoices/add_product.vue';
+import AllCustomer from '../components/invoices/all_customer.vue';
+import AllProduct from '../components/invoices/all_product.vue';
 
 const routes =[
     {
@@ -36,9 +38,19 @@ const routes =[
         component: AddCustomer
     },
     {
+        path: '/all/customer',
+        name : 'all.customer',
+        component: AllCustomer
+    },
+    {
         path: '/add/product',
         name : 'add.product',
         component: AddProduct
+    },
+    {
+        path: '/all/product',
+        name : 'all.product',
+        component: AllProduct
     },
     {
         path: '/:pathMatch(.*)',

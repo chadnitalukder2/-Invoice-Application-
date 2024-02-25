@@ -10,6 +10,8 @@ import AddCustomer from '../components/invoices/add_customer.vue';
 import AddProduct from '../components/invoices/add_product.vue';
 import AllCustomer from '../components/invoices/all_customer.vue';
 import AllProduct from '../components/invoices/all_product.vue';
+import EditProduct from '../components/invoices/edit_product.vue';
+import EditCustomer from '../components/invoices/edit_customer.vue';
 
 const routes =[
     {
@@ -38,6 +40,11 @@ const routes =[
         component: AddCustomer
     },
     {
+        path: '/edit/customer',
+        name : 'edit.customer',
+        component: EditCustomer
+    },
+    {
         path: '/all/customer',
         name : 'all.customer',
         component: AllCustomer
@@ -46,6 +53,11 @@ const routes =[
         path: '/add/product',
         name : 'add.product',
         component: AddProduct
+    },
+    {
+        path: '/edit/product',
+        name : 'edit.product',
+        component: EditProduct
     },
     {
         path: '/all/product',

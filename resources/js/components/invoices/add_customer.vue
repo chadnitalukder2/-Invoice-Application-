@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div style="max-width: 950px; margin-left: auto; margin-right: auto;">
         <div class="invoices">
             <div class="card__header">
                 <div>
@@ -59,7 +59,7 @@
         //  console.log({data});
         let response = await axios.post("/api/add_customer",data );
         form.value=[];
-
+        router.push('/all/customer')
     };
     </script>
 

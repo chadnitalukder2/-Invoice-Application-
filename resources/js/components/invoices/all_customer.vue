@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div style="max-width: 950px; margin-left: auto; margin-right: auto;">
     <!--==================== INVOICE LIST ====================-->
     <div class="invoices">
         

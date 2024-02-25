@@ -35,5 +35,13 @@ class CustomerController extends Controller
             'customers' => $customers
         ], 200);
     }
+
+
+    public function edit_customer ($id){
+        $customers = Customer::find($id);
+        return response()->json([
+            'customers' => $customers
+        ], 200);
+    }
 }
 

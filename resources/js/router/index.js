@@ -40,7 +40,7 @@ const routes =[
         component: AddCustomer
     },
     {
-        path: '/edit/customer',
+        path: '/edit/customer/:id',
         name : 'edit.customer',
         component: EditCustomer
     },
@@ -55,7 +55,7 @@ const routes =[
         component: AddProduct
     },
     {
-        path: '/edit/product',
+        path: '/edit/product/:id',
         name : 'edit.product',
         component: EditProduct
     },

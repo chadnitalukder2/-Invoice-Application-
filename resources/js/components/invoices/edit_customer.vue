@@ -36,11 +36,19 @@
     <script setup>
     import axios from "axios";
     import { useRouter } from "vue-router";
-    import { ref } from "vue";
+    import {onMounted, ref } from "vue";
     const router = useRouter();
+    import { useRoute } from 'vue-router'
+
+    const route = useRoute()
+
     let showError = ref(false);
 
     const form = ref([]);
+
+    onMounted(async () => {
+        getCustomer();
+    });
 
     const onSave = async () => {
         showError.value = false;
@@ -61,6 +69,15 @@
         form.value=[];
         router.push('/all/customer')
     };
+
+    const getCustomer = async () => {
+        let response = await axios.get(`/api/edit_customer/${route.params}`)
+        // console.log(  route.params);
+        console.log('response', response.value);
+        
+    }
+
+
     </script>
 
 <style scoped>

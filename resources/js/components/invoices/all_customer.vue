@@ -53,7 +53,8 @@
 
             <!-- item 1 -->
             <div class="table--items" v-for="item in customers" :key="item.key">
-                <a href="#"  ># {{ item.id }}</a>
+                <router-link :to="{ name: 'edit.customer', params: { id: item.id }}" ># {{ item.id }} </router-link>
+                
                 <p>{{ item.firstname }}</p>
                 <p>{{ item.lastname }}</p>
                 <p >{{ item.email }}</p>

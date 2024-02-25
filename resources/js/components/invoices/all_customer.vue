@@ -52,15 +52,14 @@
             </div>
 
             <!-- item 1 -->
-            <div class="table--items" >
-                <a href="#"  >5
-                </a>
-                <p>1</p>
-                <p>2</p>
-                <p >3</p>
-                <p>4</p>
+            <div class="table--items" v-for="item in customers" :key="item.key">
+                <a href="#"  ># {{ item.id }}</a>
+                <p>{{ item.firstname }}</p>
+                <p>{{ item.lastname }}</p>
+                <p >{{ item.email }}</p>
+                <p>{{ item.address }}</p>
             </div>
-            <div >
+            <div v-if="customers.length === 0">
                 <p>Invoice not found</p>
             </div>
 
@@ -74,7 +73,22 @@
 
 
 <script setup>
+import axios from "axios";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
+let customers = ref([]);
+
+onMounted(async () => {
+    getCustomers();
+});
+
+const getCustomers = async () => {
+    let response = await axios.get("/api/get_all_customer");
+    customers.value = response.data.customers;
+    console.log("response.data.Products", response.data.customers);
+};
 
     
 </script>

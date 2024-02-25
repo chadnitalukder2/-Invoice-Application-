@@ -28,5 +28,12 @@ class CustomerController extends Controller
 
         ]);
     }
+
+    public function get_all_customer(){
+        $customers = Customer::latest()->get();
+        return response()->json([
+            'customers' => $customers
+        ], 200);
+    }
 }
 

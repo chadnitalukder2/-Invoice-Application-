@@ -23,6 +23,8 @@
                     <p class="my-1">Address</p>
                     <input v-model="form.address" type="text" class="input" />
                 </div>
+                <br>
+                <p v-if="showError" :class="{ 'error-class': showError }"> All fields are required </p>
                 <div style="margin-top: 30px">
                     <a class="btn btn-secondary" @click="onSave()">Save</a>
                 </div>
@@ -31,29 +33,39 @@
     </div>
 </template>
 
-<script setup>
-import axios from "axios";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-const router = useRouter();
+    <script setup>
+    import axios from "axios";
+    import { useRouter } from "vue-router";
+    import { ref } from "vue";
+    const router = useRouter();
+    let showError = ref(false);
 
-const form = ref([]);
+    const form = ref([]);
 
-const onSave = async () => {
-    
-     let data = {
-        firstname : form.value.firstname,
-        lastname : form.value.lastname,
-        email : form.value.email ,
-        address : form.value.address,
-     }
-    //  console.log({data});
-     let response = await axios.post("/api/add_customer",data );
-     form.value=[];
+    const onSave = async () => {
+        showError.value = false;
+        if (!form.value.firstname  || !form.value.lastname  || !form.value.email || !form.value.address ) {
+            showError.value = true;
+            // console.log("hi");
+            return;
+        }
+     
+        let data = {
+            firstname : form.value.firstname,
+            lastname : form.value.lastname,
+            email : form.value.email ,
+            address : form.value.address,
+        }
+        //  console.log({data});
+        let response = await axios.post("/api/add_customer",data );
+        form.value=[];
 
-};
-</script>
+    };
+    </script>
 
 <style scoped>
-
+    .error-class {
+        color: red; 
+        font-weight: bold;
+    }
 </style>

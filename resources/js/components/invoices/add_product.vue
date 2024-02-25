@@ -19,7 +19,8 @@
                     <p class="my-1">Unit Price</p>
                     <input v-model="form.unit_price" type="text" class="input" />
                 </div>
-               
+                <br>
+               <p v-if="showError" :class="{'error-class' : showError}"> All fields are required </p>
                 <div style="margin-top: 30px">
                     <a class="btn btn-secondary" @click="onSave()">Save</a>
                 </div>
@@ -35,8 +36,14 @@ import { ref } from "vue";
 const router = useRouter();
 
 const form = ref([]);
+let showError = ref(false);
 
 const onSave = async () => {
+    showError.value = false;
+    if(!form.value.item_code || !form.value.description || !form.value.unit_price){
+        showError.value = true;
+        return;
+    }
      let data = {
         item_code  : form.value.item_code ,
         description : form.value.description,
@@ -51,5 +58,8 @@ const onSave = async () => {
 </script>
 
 <style scoped>
-
+    .error-class {
+        color: red; 
+        font-weight: bold;
+    }
 </style>

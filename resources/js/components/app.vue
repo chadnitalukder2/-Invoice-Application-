@@ -2,22 +2,51 @@
 <header>
         <nav class="containers">
             <div class="branding">
-                <h1>Vue Todos</h1>
+                <router-link to="/" style="text-decoration: none;">
+                    <h1>Invoice App</h1>
+                </router-link>
+            
             </div>
             <ul class="nav-routes">
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
+                <div >
+                <a class="btn btn-secondary bt-3">
+                    <router-link to="/">
+                    Home
+                </router-link>
+                </a>
+            </div>
+                <div >
+                <a class="btn btn-secondary bt-3">
+                    <router-link to="/add/customer">
+                    Add Customer
+                </router-link>
+                </a>
+            </div>
+            <div >
+                <a class="btn btn-secondary bt-3">
+                    <router-link to="/all/customer">
+                    All Customer
+                </router-link>
+                </a>
+            </div>
+            <div >
+                <a class="btn btn-secondary bt-3">
+                    <router-link to="/add/product">
+                        Add product
+                    </router-link>
+                </a>
+            </div>
+            <div >
+                <a class="btn btn-secondary bt-3">
+                    <router-link to="/all/product">
+                        All product
+                    </router-link>
+                </a>
+            </div>
             </ul>
         </nav>
     </header>
     <br>
-
-    <button >
-        <router-link to="/">
-            Home
-        </router-link>
-
-    </button>
     <router-view></router-view>
 </template>
 <script>
@@ -30,7 +59,7 @@
         nav {
             display: flex;
             align-items: center;
-            padding: 25px 16px;
+            padding: 30px 25px;
 
             .branding {
                 display: flex;

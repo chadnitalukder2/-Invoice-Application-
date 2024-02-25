@@ -25,4 +25,11 @@ class ProductController extends Controller
 
         ]);
     }
+
+    public function get_all_product(){
+        $products = Product::latest()->get();
+        return response()->json([
+            'products' => $products
+        ], 200);
+    }
 }

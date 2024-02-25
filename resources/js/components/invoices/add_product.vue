@@ -53,6 +53,7 @@ const onSave = async () => {
      let response = await axios.post("/api/add_product",data );
      
      form.value=[];
+     router.push('/all/product')
 
 };
 </script>

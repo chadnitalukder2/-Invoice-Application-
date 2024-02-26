@@ -9,24 +9,23 @@
             <div class="table card__content" style="padding: 20px 30px">
                 <div>
                     <p class="my-1">First Name</p>
-                    <input v-model="form.firstname" type="text" class="input" />
+                    <input v-model="customer.firstname" type="text" class="input" />
                 </div>
                 <div>
                     <p class="my-1">Last Name</p>
-                    <input v-model="form.lastname" type="text" class="input" />
+                    <input v-model="customer.lastname" type="text" class="input" />
                 </div>
                 <div>
                     <p class="my-1">Email</p>
-                    <input v-model="form.email" type="text" class="input" />
+                    <input v-model="customer.email" type="text" class="input" />
                 </div>
                 <div>
                     <p class="my-1">Address</p>
-                    <input v-model="form.address" type="text" class="input" />
+                    <input v-model="customer.address" type="text" class="input" />
                 </div>
-                <br>
-                <p v-if="showError" :class="{ 'error-class': showError }"> All fields are required </p>
+               
                 <div style="margin-top: 30px">
-                    <a class="btn btn-secondary" @click="onSave()">Save</a>
+                    <a class="btn btn-secondary" @click="onUpdate()">Update Data</a>
                 </div>
             </div>
         </div>
@@ -42,38 +41,32 @@
 
     const route = useRoute()
 
-    let showError = ref(false);
-
-    const form = ref([]);
+    const customer = ref([]);
 
     onMounted(async () => {
         getCustomer();
     });
 
-    const onSave = async () => {
-        showError.value = false;
-        if (!form.value.firstname  || !form.value.lastname  || !form.value.email || !form.value.address ) {
-            showError.value = true;
-            // console.log("hi");
-            return;
-        }
+    const onUpdate = async () => {
      
         let data = {
-            firstname : form.value.firstname,
-            lastname : form.value.lastname,
-            email : form.value.email ,
-            address : form.value.address,
+            firstname : customer.value.firstname,
+            lastname : customer.value.lastname,
+            email : customer.value.email ,
+            address : customer.value.address,
         }
-        //  console.log({data});
-        let response = await axios.post("/api/add_customer",data );
-        form.value=[];
+        let response = await axios.post(`/api/update_customer/${customer.value.id}`,data );
+       
+        // console.log('response', response.data.msg);
+         // form.value=[];
         router.push('/all/customer')
     };
 
     const getCustomer = async () => {
-        let response = await axios.get(`/api/edit_customer/${route.params}`)
-        // console.log(  route.params);
-        console.log('response', response.value);
+        let response = await axios.get(`/api/edt_customer/${route.params.id}`)
+    
+       customer.value = response.data.customer;
+    //   console.log(customer.value);
         
     }
 

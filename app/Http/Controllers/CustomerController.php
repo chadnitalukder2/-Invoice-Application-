@@ -36,12 +36,28 @@ class CustomerController extends Controller
         ], 200);
     }
 
-
-    public function edit_customer ($id){
-        $customers = Customer::find($id);
+    public function edt_customer ( $id){
+        $customer = Customer::find($id);
         return response()->json([
-            'customers' => $customers
+            'customer' => $customer
         ], 200);
     }
+
+    public function update_customer(Request $request, $id){
+        $customer = Customer::where('id', $id)->first();
+
+        $customer->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'email'  => $request->email,
+            'address'  => $request->address,
+            'updated_at' =>  Carbon::now()
+         ]);
+         return response()->json([
+            'msg' => 'customer updated successful'
+        ], 200);
+
+    }
+
 }
 

@@ -128,7 +128,7 @@ class InvoiceController extends Controller
                 'discount' => $request->discount,
                 'reference' => $request->reference,
                 'terms_and_conditions' => $request->terms_and_conditions,
-            ]);
+        ]);
         $invoiceitem = $request->input("invoice_items");
 
         foreach(json_decode($invoiceitem) as $item){

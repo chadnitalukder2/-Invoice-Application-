@@ -88,7 +88,7 @@ onMounted(async () => {
 const getCustomers = async () => {
     let response = await axios.get("/api/get_all_customer");
     customers.value = response.data.customers;
-    console.log("response.data.Products", response.data.customers);
+    // console.log("response.data.customer", response.data.customers);
 };
 
     

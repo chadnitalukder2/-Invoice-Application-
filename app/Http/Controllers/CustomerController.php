@@ -59,5 +59,10 @@ class CustomerController extends Controller
 
     }
 
+    public function delete_customer($id){
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+    }
+
 }
 

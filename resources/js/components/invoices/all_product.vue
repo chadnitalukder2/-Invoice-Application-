@@ -50,6 +50,7 @@
                     <p>Item Code</p>
                     <p>Description</p>
                     <p>Unit Price</p>
+                    <p>Action</p>
                 </div>
 
                 <!-- item 1 -->
@@ -58,10 +59,11 @@
                     v-for="item in Products"
                     :key="item.id"
                 >
-                    <p># {{ item.id }}</p>
+                <router-link :to="{ name: 'edit.product', params: { id: item.id }}" ># {{ item.id }} </router-link>
                     <p>{{ item.item_code}}</p>
                     <p>{{ item.description }}</p>
                     <p>{{ item.unit_price }}</p>
+                    <p  @click="deleteProduct(item.id)" style="color: red; cursor: pointer;" > Delete</p>
                 </div>
                 <div v-if="Products.length === 0">
                     <p>Invoice not found</p>
@@ -88,4 +90,18 @@ const getProducts = async () => {
     Products.value = response.data.products;
     // console.log("response.data.Products", response.data.products);
 };
+
+const deleteProduct = (id) => {
+    axios.get(`/api/delete_product/${id}`)
+    .then(response => {
+            // Handle success if needed
+            console.log('Product deleted successfully:', response);
+            router.push('/all/product');
+        })
+        .catch(error => {
+            // Handle error if needed
+            console.error('Error deleting product:', error);
+        });
+    }
+
 </script>

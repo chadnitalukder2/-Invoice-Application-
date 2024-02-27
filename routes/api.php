@@ -44,9 +44,11 @@ Route::post('/add_customer', [CustomerController::class, 'add_customer']);
 Route::get('/get_all_customer', [CustomerController::class, 'get_all_customer']);
 Route::get('/edt_customer/{id}', [CustomerController::class, 'edt_customer']);
 Route::post('/update_customer/{id}', [CustomerController::class, 'update_customer']);
+Route::get('/delete_customer/{id}', [CustomerController::class, 'delete_customer']);
 
 
 Route::post('/add_product', [ProductController::class, 'add_product']);
 Route::get('/get_all_product', [ProductController::class, 'get_all_product']);
-
-
+Route::get('/edit_product/{id}', [ProductController::class, 'edit_product']);
+Route::post('/update_product/{id}', [ProductController::class, 'update_product']);
+Route::get('/delete_product/{id}', [ProductController::class, 'delete_product']);

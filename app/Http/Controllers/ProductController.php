@@ -32,4 +32,33 @@ class ProductController extends Controller
             'products' => $products
         ], 200);
     }
+
+    public function edit_product($id){
+        $product = Product::find($id);
+        return response()->json([
+            'product' => $product
+        ], 200);
+    }
+
+    public function update_product(Request $request, $id){
+        $product = Product::where('id', $id)->first();
+
+        $product->update([
+            'item_code' => $request->item_code,
+            'description' => $request->description,
+            'unit_price'  => $request->unit_price,
+            'updated_at' =>  Carbon::now()
+         ]);
+         return response()->json([
+            'msg' => 'Product updated successful'
+        ], 200);
+    }
+
+
+    public function delete_product($id){
+        $product = Product::findOrFail($id);
+        $product->delete();
+    }
+
+
 }

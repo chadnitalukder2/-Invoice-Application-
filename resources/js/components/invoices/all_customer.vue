@@ -49,6 +49,7 @@
                 <p>Last Name</p>
                 <p>Email </p>
                 <p>Address</p>
+                <p>Action</p>
             </div>
 
             <!-- item 1 -->
@@ -59,6 +60,7 @@
                 <p>{{ item.lastname }}</p>
                 <p >{{ item.email }}</p>
                 <p>{{ item.address }}</p>
+                <p  @click="deleteCustomer(item.id)" style="color: red; cursor: pointer;" > Delete</p>
             </div>
             <div v-if="customers.length === 0">
                 <p>Invoice not found</p>
@@ -90,6 +92,11 @@ const getCustomers = async () => {
     customers.value = response.data.customers;
     // console.log("response.data.customer", response.data.customers);
 };
+
+const deleteCustomer = (id) => {
+    axios.get(`/api/delete_customer/${id}`)
+     
+    }
 
     
 </script>

@@ -57,7 +57,7 @@
         }
         let response = await axios.post(`/api/update_customer/${customer.value.id}`,data );
        
-        // console.log('response', response.data.msg);
+        alert( response.data.msg);
          // form.value=[];
         router.push('/all/customer')
     };

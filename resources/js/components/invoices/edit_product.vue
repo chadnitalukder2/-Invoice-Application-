@@ -19,10 +19,8 @@
                     <p class="my-1">Unit Price</p>
                     <input v-model="form.unit_price" type="text" class="input" />
                 </div>
-                <br>
-               <p v-if="showError" :class="{'error-class' : showError}"> All fields are required </p>
                 <div style="margin-top: 30px">
-                    <a class="btn btn-secondary" @click="onSave()">Save</a>
+                    <a class="btn btn-secondary" @click="Update()">Update Data</a>
                 </div>
             </div>
         </div>
@@ -30,32 +28,39 @@
 </template>
 
 <script setup>
-import axios from "axios";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-const router = useRouter();
+    import axios from "axios";
+    import { useRouter } from "vue-router";
+    import {onMounted, ref } from "vue";
+    const router = useRouter();
+    import { useRoute } from 'vue-router';
+
+    const route = useRoute();
 
 const form = ref([]);
-let showError = ref(false);
 
-const onSave = async () => {
-    showError.value = false;
-    if(!form.value.item_code || !form.value.description || !form.value.unit_price){
-        showError.value = true;
-        return;
-    }
+    onMounted(async () => {
+        getProduct();
+    });
+
+const Update = async () => {
      let data = {
         item_code  : form.value.item_code ,
         description : form.value.description,
         unit_price : form.value.unit_price ,
      }
     //  console.log({data});
-     let response = await axios.post("/api/add_product",data );
-     
-     form.value=[];
+     let response = await axios.post(`/api/update_product/${form.value.id}`,data );
+     alert( response.data.msg);
      router.push('/all/product')
 
 };
+
+const getProduct = async () => {
+    let response = await axios.get(`/api/edit_product/${route.params.id}`)
+    // console.log('response', response)
+    form.value = response.data.product
+    console.log('form', form.value)
+}
 </script>
 
 <style scoped>
